@@ -1,0 +1,10 @@
+{
+  "name": "Simple Contact",
+  "main": "index.html",  
+  "window": {
+    "icon": "img/app.ico",
+	"height": 500,
+	"width": 1020,
+	"toolbar"	: false
+  }
+}

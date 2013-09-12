@@ -1,0 +1,92 @@
+<!doctype html>
+<html ng-app lang="zh-cn">
+    <head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <title>Simple Contact by PortWatcher</title>
+        <script src="js/angular.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    
+    <body>
+        <div class="container" ng-controller="contactCtrl">
+            <div class="col-md-6" id="list">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header"></div>
+                    
+                    <form class="navbar-form" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="query" ng-change="find(query)" placeholder="查找联系人">
+                        </div>
+                        <a class="btn btn-default btn-large pull-right" href="#add" id="btnAdd" ng-click="showAddForm()"><span class="glyphicon glyphicon-plus"></span> 添加联系人</a>
+                    </form>
+                </nav>
+                
+                <div class="container">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li ng-repeat="person in people">
+                            <a href="#/detail/{{$index}}" class="{{person.active}}" ng-click="detail($index)"><h4>{{person.name}}</h4></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-6" id="detail">
+                <form role="form" ng-repeat="person in people">
+                    <section class="{{person.show}}">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <h2>{{person.name}}</h2>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">联系电话</label>
+                            <h2>{{person.phone}}</h2>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">家庭住址</label>
+                            <h2>{{person.address}}</h2>
+                        </div>
+                        <a class="btn-block btn btn-large btn-default" ng-click="showEditForm($index)">编辑</a><a class="btn-block btn btn-danger btn-large" ng-click="remove($index)">删除</a>
+                    </section>
+                </form>
+                
+                <form role="form" id="formAdd" ng-submit="add()" class="{{addForm.show}}">
+                    <div class="form-group {{addForm.inputName.state}}">
+                        <label for="name">姓名</label>
+                        <input type="text" ng-model="newPeople.name" class="form-control">
+                    </div>
+                    <div class="form-group {{addForm.inputPhone.state}}">
+                        <label for="phone">联系电话</label>
+                        <input type="tel" ng-model="newPeople.phone" class="form-control">
+                    </div>
+                    <div class="form-group {{addForm.inputAdress.state}}">
+                        <label for="address">家庭住址</label>
+                        <input type="text" ng-model="newPeople.address" class="form-control">
+                    </div>
+                    <button class="btn btn-primary btn-large" id="btnConfirm" type="submit">完成</button>
+                </form>
+                
+                <form role="form" id="formEdit" class="{{editForm.show}}">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" ng-model="people[indexToEdit].name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">联系电话</label>
+                        <input type="tel" ng-model="people[indexToEdit].phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">家庭住址</label>
+                        <input type="text" ng-model="people[indexToEdit].address" class="form-control">
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/contactCtrl.js"></script>
+    </body>
+</html>
