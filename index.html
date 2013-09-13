@@ -68,17 +68,17 @@
                 </form>
                 
                 <form role="form" id="formEdit" class="{{editForm.show}}">
-                    <div class="form-group">
+                    <div class="form-group {{editForm.inputName.state}}">
                         <label for="name">姓名</label>
-                        <input type="text" ng-model="people[indexToEdit].name" class="form-control">
+                        <input type="text" ng-model="people[indexToEdit].name" ng-change="editFormChange()" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{editForm.inputPhone.state}}">
                         <label for="phone">联系电话</label>
-                        <input type="tel" ng-model="people[indexToEdit].phone" class="form-control">
+                        <input type="tel" ng-model="people[indexToEdit].phone" ng-change="editFormChange()" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{editForm.inputAddress.state}}">
                         <label for="address">家庭住址</label>
-                        <input type="text" ng-model="people[indexToEdit].address" class="form-control">
+                        <input type="text" ng-model="people[indexToEdit].address" ng-change="editFormChange()" class="form-control">
                     </div>
                 </form>
             </div>

@@ -36,20 +36,31 @@ var newPeople = {
 var addForm = {
     inputName: { state: '', ok: false },
     inputPhone: { state: '', ok: false },
-    inputAdress: { state: '', ok: false },
+    inputAddress: { state: '', ok: false },
     show: 'hide',
     reset: function () {
         this.inputName.state = '';
         this.inputName.ok = false;
         this.inputPhone.state = '';
         this.inputPhone.ok = false;
-        this.inputAdress.state = '';
-        this.inputAdress.ok = false;
+        this.inputAddress.state = '';
+        this.inputAddress.ok = false;
     }
 };
 
 var editForm = {
-    show: 'hide'
+    inputName: { state: '', ok: false },
+    inputPhone: { state: '', ok: false },
+    inputAddress: { state: '', ok: false },
+    show: 'hide',
+    reset: function () {
+        this.inputName.state = '';
+        this.inputName.ok = false;
+        this.inputPhone.state = '';
+        this.inputPhone.ok = false;
+        this.inputAddress.state = '';
+        this.inputAddress.ok = false;
+    }
 };
 
 var peopleToShow = [];
@@ -80,13 +91,13 @@ var contactCtrl = function ($scope) {
         }
 
         if ($scope.newPeople.address == null) {
-            $scope.addForm.inputAdress.state = 'has-error';
+            $scope.addForm.inputAddress.state = 'has-error';
         } else {
-            $scope.addForm.inputAdress.state = 'has-success';
-            $scope.addForm.inputAdress.ok = true;
+            $scope.addForm.inputAddress.state = 'has-success';
+            $scope.addForm.inputAddress.ok = true;
         }
 
-        if ($scope.addForm.inputName.ok && $scope.addForm.inputPhone.ok && $scope.addForm.inputAdress.ok) {
+        if ($scope.addForm.inputName.ok && $scope.addForm.inputPhone.ok && $scope.addForm.inputAddress.ok) {
             var newPeople = { "name": $scope.newPeople.name, "phone": $scope.newPeople.phone, "address": $scope.newPeople.address, "show": 'hide', "active": 'inacitve' };
             
             $scope.people.push(newPeople);
@@ -94,6 +105,36 @@ var contactCtrl = function ($scope) {
             
             $scope.addForm.reset();
             $scope.newPeople.reset();
+        }
+    };
+    
+    $scope.editFormChange = function () {
+        //edit form validation
+        if ($scope.people[$scope.indexToEdit].name == null) {
+            $scope.editForm.inputName.state = 'has-error';
+        } else {
+            $scope.editForm.inputName.state = 'has-success';
+            $scope.editForm.inputName.ok = true;
+        }
+
+        if ($scope.people[$scope.indexToEdit].phone == null || isNaN($scope.people[$scope.indexToEdit].phone)) {
+            $scope.editForm.inputPhone.state = 'has-error';
+        } else {
+            $scope.editForm.inputPhone.state = 'has-success';
+            $scope.editForm.inputPhone.ok = true;
+        }
+
+        if ($scope.people[$scope.indexToEdit].address == null) {
+            $scope.editForm.inputAddress.state = 'has-error';
+        } else {
+            $scope.editForm.inputAddress.state = 'has-success';
+            $scope.editForm.inputAddress.ok = true;
+        }
+        
+        if ($scope.editForm.inputName.ok && $scope.editForm.inputPhone.ok && $scope.editForm.inputAddress.ok) {
+            var peopleToSave = {"name": $scope.people[$scope.indexToEdit].name, "phone": $scope.people[$scope.indexToEdit].phone, "address": $scope.people[$scope.indexToEdit].address, "show": 'hide', "active": 'inactive'};
+            localStorage.setItem($scope.people[$scope.indexToEdit].name, JSON.stringify(peopleToSave));
+            $scope.editForm.reset();
         }
     };
     
@@ -119,6 +160,7 @@ var contactCtrl = function ($scope) {
         }
         $scope.refreshSelection();
         if (result[0] != undefined) {
+            $scope.detail.last = 0;
             $scope.people = result;
             console.dir($scope.people);
             $scope.people[0].show = 'show';
